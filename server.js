@@ -4,6 +4,8 @@ const morgan = require("morgan");
 const cors = require("cors");
 const connectDB = require("./config/db");
 const userRoutes = require("./routes/userRoutes");
+const auth = require("./middlewares/authMiddleWare");
+const routes = require("./routes/index");
 
 dotenv.config();
 connectDB();
@@ -15,12 +17,12 @@ if (process.env.NODE_ENV === "development") {
 app.use(express.static("public"));
 app.use(express.json());
 app.use(cors());
+app.use(routes);
+app.use("/api", auth.protect);
 
 app.get("/", function (req, res) {
   res.send("Backend is running successfully....");
 });
-
-app.use("/api/v1/user", userRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(
