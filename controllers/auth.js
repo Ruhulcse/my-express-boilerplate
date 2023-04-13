@@ -34,7 +34,8 @@ const Registration = asyncHandler(async (req, res) => {
   const user = new User({
     email: req.body.email,
     password: req.body.password,
-    name: req.body.name,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName
   });
 
   try {
